@@ -18,10 +18,11 @@ class CMPHashFile(object):
 
         Opens file `filename`, which must be a CMPH hash file.
         '''
-        self.hashfile = libc.fopen(filename, 'rb')
-        if self.hashfile is None:
+        hashfile = libc.fopen(filename, 'rb')
+        if hashfile is None:
             raise IOError("could not open %s" % filename)
-        self.cmph_hash = libcmph.cmph_load(self.hashfile)
+        self.cmph_hash = libcmph.cmph_load(hashfile)
+        libc.fclose(hashfile)
 
     def __del__(self):
         self.close()
@@ -35,9 +36,6 @@ class CMPHashFile(object):
         if self.cmph_hash is not None:
             libcmph.cmph_destroy(self.cmph_hash)
             self.cmph_hash = None
-        if self.hashfile is not None:
-            libc.fclose(self.hashfile)
-            self.hashfile = None
 
     def search(self, query):
         '''
