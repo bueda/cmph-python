@@ -18,6 +18,7 @@ class CMPHashFile(object):
 
         Opens file `filename`, which must be a CMPH hash file.
         '''
+        self.cmph_hash = None
         hashfile = libc.fopen(filename, 'rb')
         if hashfile is None:
             raise IOError("could not open %s" % filename)
