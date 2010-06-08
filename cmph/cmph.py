@@ -34,7 +34,7 @@ class CMPHashFile(object):
 
         Closes the hash file.
         '''
-        if self.cmph_hash is not None:
+        if libcmph and self.cmph_hash is not None:
             libcmph.cmph_destroy(self.cmph_hash)
             self.cmph_hash = None
 
